@@ -1,0 +1,398 @@
+/* src/pages/ContactPage.css */
+
+/* Định nghĩa các biến màu sắc chung nếu chưa có trong App.css/index.css */
+:root {
+    --primary-color: #ff9100; /* Màu cam đậm của Dola */
+    --secondary-color: #ffc107; /* Một tông cam vàng hơn cho điểm nhấn */
+    --accent-color: #e67e22; /* Màu cam cháy nhẹ */
+    --dark-text-color: #333;
+    --text-color: #555;
+    --text-muted: #777;
+    --light-bg: #fdfdfd;
+    --light-gray-bg: #f5f5f5;
+    --soft-yellow-bg: #f3e7cd; /* Màu vàng nhạt cho section thông tin */
+    --border-color: #e0e0e0;
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.4s ease-out; /* Tốc độ chuyển động chung */
+}
+
+body {
+    font-family: 'Arial', sans-serif; /* Đảm bảo font chữ đẹp */
+    color: var(--text-color);
+    background-color: var(--light-gray-bg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Banner/Hero Section */
+.contact-page-hero {
+    background-image: url('../../assets/images/banner.jpg'); /* Sử dụng lại banner chung hoặc đổi */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0; /* Tăng padding */
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Che đi phần tràn ra của overlay */
+}
+
+.contact-page-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Lớp phủ tối hơn */
+    z-index: -1;
+}
+
+.contact-page-hero h1 {
+    font-size: 3.5em; /* Lớn hơn */
+    margin-bottom: 15px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Thêm đổ bóng chữ */
+    letter-spacing: 1px; /* Khoảng cách chữ */
+}
+
+.contact-page-hero .breadcrumb-link,
+.contact-page-hero .breadcrumb-current {
+    color: rgba(255, 255, 255, 0.8); /* Màu trắng trong suốt */
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+.contact-page-hero .breadcrumb-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* Main Content Wrapper */
+.contact-content {
+    padding: 80px 0; /* Tăng khoảng cách */
+    background-color: var(--light-gray-bg);
+}
+
+/* Section Titles */
+.section-title {
+    text-align: center;
+    font-size: 2.8em; /* Lớn hơn */
+    color: var(--primary-color);
+    margin-bottom: 50px; /* Tăng khoảng cách */
+    position: relative;
+    font-weight: 700; /* Đậm hơn */
+    text-transform: uppercase; /* Chữ hoa */
+    letter-spacing: 1.5px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px; /* Xuống dưới một chút */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px; /* Dài hơn */
+    height: 4px; /* Dày hơn */
+    background-color: var(--secondary-color);
+    border-radius: 2px;
+}
+
+/* Store Info Section */
+.store-info {
+    background-color: var(--soft-yellow-bg); /* Màu nền vàng nhạt */
+    padding: 50px; /* Tăng padding */
+    border-radius: 12px; /* Bo góc nhiều hơn */
+    box-shadow: var(--shadow-medium); /* Đổ bóng mạnh hơn */
+    margin-bottom: 80px; /* Tăng khoảng cách dưới */
+    overflow: hidden;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px; /* Tăng khoảng cách giữa các item */
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start; /* Căn trên cùng */
+    background-color: white;
+    padding: 25px; /* Tăng padding */
+    border-radius: 10px; /* Bo góc */
+    box-shadow: var(--shadow-light); /* Đổ bóng nhẹ */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng hover */
+    overflow: hidden;
+    border: 1px solid var(--border-color); /* Thêm viền nhẹ */
+}
+
+.info-item:hover {
+    transform: translateY(-5px); /* Nâng lên khi hover */
+    box-shadow: var(--shadow-medium); /* Đổ bóng mạnh hơn khi hover */
+}
+
+.info-item i {
+    font-size: 3em; /* Lớn hơn */
+    color: var(--primary-color);
+    margin-right: 25px; /* Khoảng cách lớn hơn */
+    flex-shrink: 0; /* Ngăn icon bị co lại */
+}
+
+.info-item .info-text {
+    flex-grow: 1;
+}
+
+.info-item h3 {
+    font-size: 1.4em; /* Lớn hơn */
+    color: var(--dark-text-color);
+    margin-bottom: 8px; /* Khoảng cách nhỏ */
+    font-weight: 700;
+}
+
+.info-item p {
+    font-size: 1em; /* Kích thước chuẩn */
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Contact Form Section */
+.contact-form-section {
+    background-color: var(--light-bg); /* Nền trắng sáng */
+    padding: 50px; /* Tăng padding */
+    border-radius: 12px;
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+}
+
+.contact-form-section .form-description {
+    text-align: center;
+    margin-bottom: 40px; /* Tăng khoảng cách */
+    color: var(--text-color);
+    font-size: 1.15em; /* Lớn hơn */
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+}
+
+.contact-form .form-group {
+    margin-bottom: 25px; /* Tăng khoảng cách */
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 10px; /* Khoảng cách lớn hơn */
+    font-weight: 700; /* Đậm hơn */
+    color: var(--dark-text-color);
+    font-size: 1.05em;
+}
+
+.contact-form .required-star {
+    color: red; /* Màu đỏ cho dấu sao */
+    font-size: 0.9em;
+    margin-left: 5px;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea {
+    width: 100%;
+    padding: 14px 18px; /* Tăng padding */
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Bo góc nhiều hơn */
+    font-size: 1.05em; /* Lớn hơn */
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Đổ bóng inset nhẹ */
+}
+
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form input[type="tel"]:focus,
+.contact-form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2); /* Đổ bóng focus nhẹ */
+    outline: none;
+}
+/* Để dùng var(--primary-color-rgb), bạn cần định nghĩa nó. Ví dụ: */
+/* --primary-color-rgb: 255, 145, 0; */
+
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 150px; /* Cao hơn một chút */
+}
+
+.contact-form .submit-btn {
+    display: block;
+    width: 280px; /* Rộng hơn */
+    margin: 40px auto 0 auto; /* Tăng khoảng cách trên */
+    background-color: var(--secondary-color); /* Màu cam vàng */
+    color: var(--dark-text-color);
+    border: none; /* Bỏ viền */
+    padding: 16px 35px; /* Tăng padding */
+    border-radius: 8px;
+    font-size: 1.2em; /* Lớn hơn */
+    font-weight: 700; /* Đậm hơn */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light); /* Đổ bóng nhẹ */
+}
+
+.contact-form .submit-btn:hover:not(:disabled) {
+    background-color: var(--primary-color); /* Màu cam đậm khi hover */
+    color: white;
+    box-shadow: var(--shadow-medium); /* Đổ bóng mạnh hơn khi hover */
+    transform: translateY(-2px); /* Nâng lên nhẹ */
+}
+
+.contact-form .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--border-color); /* Màu xám khi disabled */
+    color: var(--text-muted);
+}
+
+/* Submit Message Styles */
+.submit-message {
+    padding: 15px;
+    margin-bottom: 25px; /* Tăng khoảng cách */
+    border-radius: 8px; /* Bo góc */
+    font-weight: 600;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out; /* Hiệu ứng fade-in cho thông báo */
+}
+
+.submit-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.submit-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.submit-message.loading {
+    background-color: #e2e3e5;
+    color: #383d41;
+    border: 1px solid #d6d8db;
+}
+
+/* Animations (Fade In) */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px); /* Bắt đầu từ dưới lên */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .contact-page-hero h1 {
+        font-size: 3em;
+    }
+    .section-title {
+        font-size: 2.2em;
+    }
+    .store-info,
+    .contact-form-section {
+        padding: 40px;
+    }
+    .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-page-hero {
+        padding: 80px 0;
+    }
+    .contact-page-hero h1 {
+        font-size: 2.5em;
+    }
+    .section-title {
+        font-size: 1.8em;
+        margin-bottom: 40px;
+    }
+    .store-info,
+    .contact-form-section {
+        padding: 30px;
+    }
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    .info-item {
+        padding: 20px;
+    }
+    .info-item i {
+        font-size: 2.5em;
+        margin-right: 20px;
+    }
+    .info-item h3 {
+        font-size: 1.2em;
+    }
+    .contact-form-section .form-description {
+        font-size: 1em;
+        margin-bottom: 30px;
+    }
+    .contact-form input,
+    .contact-form textarea {
+        padding: 12px 15px;
+        font-size: 1em;
+    }
+    .contact-form .submit-btn {
+        width: 100%;
+        font-size: 1.1em;
+        padding: 14px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-page-hero h1 {
+        font-size: 2em;
+    }
+    .section-title {
+        font-size: 1.6em;
+    }
+    .store-info,
+    .contact-form-section {
+        padding: 20px;
+    }
+    .info-item i {
+        font-size: 2em;
+    }
+    .contact-form label {
+        font-size: 0.95em;
+    }
+}

@@ -1,0 +1,350 @@
+/* src/pages/ProductsPage.css */
+
+/* Product Page Hero / Breadcrumb */
+.product-page-hero {
+    padding: 50px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    background-image: url(../../assets/images/breadcrumb.jpg); 
+    background-size: cover;
+    background-position: center;
+    opacity: 0.9;
+    
+}
+
+.product-page-hero h1 {
+    font-size: 2.8em;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.breadcrumb-link {
+    color: var(--secondary-color);
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+    color: var(--primary-color);
+}
+
+.breadcrumb-current {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Highlight Categories (4 ô vuông đầu trang) */
+.highlight-categories {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.highlight-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.highlight-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.highlight-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.highlight-card h3 {
+    font-size: 1.5em;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.btn-small-outline {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-small-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+/* Main Products Content: Sidebar + Product List */
+.main-products-content {
+    display: flex;
+    gap: 30px;
+    padding: 60px 20px;
+    align-items: flex-start; /* Sidebar và nội dung sản phẩm căn trên */
+}
+
+.sidebar {
+    flex: 0 0 280px; /* Chiều rộng cố định cho sidebar */
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+}
+
+.filter-section {
+    margin-bottom: 30px;
+}
+
+.filter-section:last-child {
+    margin-bottom: 0;
+}
+
+.filter-section h4 {
+    font-size: 1.4em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.filter-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.filter-section ul li {
+    padding: 10px 0;
+    cursor: pointer;
+    color: #000;
+    font-size: 1.05em;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.filter-section ul li i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.filter-section ul li.active {
+    color: #000;
+    font-weight: 600;
+    background-color: #fcf1eb; /* Nền nhẹ khi active */
+    border-radius: 4px;
+    padding-left: 10px;
+    margin-left: -10px; /* Để bù lại padding-left */
+}
+
+.filter-section ul li:hover {
+    color: var(--primary-color);
+}
+
+.filter-section input[type="radio"],
+.filter-section input[type="checkbox"] {
+    margin-right: 10px;
+    /* Tùy chỉnh checkbox/radio nếu muốn */
+    accent-color: var(--primary-color); /* Màu nhấn cho checkbox/radio */
+}
+
+.product-list-content {
+    flex-grow: 1; /* Phần nội dung sản phẩm sẽ chiếm hết không gian còn lại */
+}
+
+/* Sort Options */
+.sort-options {
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.sort-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-right: 10px;
+}
+
+.sort-btn {
+    background-color: var(--light-bg-color);
+    color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.sort-btn:hover {
+    background-color: #f0f0f0;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.sort-btn.active {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border-color: var(--primary-color);
+    font-weight: 500;
+}
+
+.sort-btn.active:hover {
+    background-color: #c96c31;
+    border-color: #c96c31;
+}
+
+/* Product Grid (sử dụng ProductCard.css cho từng card) */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px; /* Khoảng cách giữa các sản phẩm */
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .main-products-content {
+        flex-direction: column;
+        padding: 40px 15px;
+    }
+
+    .sidebar {
+        flex: none;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .highlight-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .product-page-hero h1 {
+        font-size: 2.2em;
+    }
+    .highlight-grid {
+        gap: 20px;
+    }
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+    }
+    .sort-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .sort-label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .sort-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .highlight-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.filter-section ul li label {
+    display: flex; /* Dùng flexbox để căn chỉnh icon/checkbox/radio với text */
+    align-items: center;
+    cursor: pointer;
+    width: 100%; /* Đảm bảo label chiếm toàn bộ chiều rộng */
+    padding: 8px 0; /* Thêm padding nhẹ */
+}
+
+.filter-section input[type="radio"],
+.filter-section input[type="checkbox"] {
+    margin-right: 12px; /* Khoảng cách giữa checkbox/radio và text */
+    /* Tùy chỉnh kích thước và màu sắc mặc định của input */
+    width: 18px; /* Kích thước */
+    height: 18px; /* Kích thước */
+    accent-color: var(--primary-color); /* Màu nhấn cho checkbox/radio (Modern browsers) */
+    /* Để tùy chỉnh sâu hơn trên các trình duyệt cũ, bạn cần ẩn input thật và tạo kiểu cho pseudo-elements */
+}
+
+/* Kiểu dáng cho danh mục active (áp dụng cho cả category và price) */
+.filter-section ul li.active label {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+/* Hoặc cho radio/checkbox active, điều này đã được xử lý bởi `checked` trên input */
+
+
+/* CSS cho tên category trong highlight-card nếu bạn thêm */
+.highlight-card .highlight-category-name {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin-top: -10px; /* Dịch lên gần tên sản phẩm */
+    margin-bottom: 15px;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 40px; /* Khoảng cách dưới cùng */
+    flex-wrap: wrap; /* Cho phép các nút xuống dòng nếu màn hình nhỏ */
+}
+
+.pagination-btn {
+    background-color: var(--light-gray-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 1em;
+    min-width: 40px; /* Đảm bảo các nút số có kích thước tối thiểu */
+}
+
+.pagination-btn:hover:not(:disabled),
+.pagination-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.pagination-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Căn giữa thông báo "Không tìm thấy sản phẩm" */
+.product-grid p.text-center {
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng của grid */
+    text-align: center;
+    grid-column: 1 / -1; /* Mở rộng qua tất cả các cột của grid */
+    padding: 20px 0;
+    color: var(--text-muted);
+}
