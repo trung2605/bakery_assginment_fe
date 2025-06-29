@@ -1,25 +1,25 @@
-// src/App.js
-
+// src/App.js (hoặc App.tsx)
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import HomePage from './pages/Home/HomePage'; // Sẽ tạo ở bước tiếp theo
-import './App.css'; // Global CSS (nếu có)
-import './styles/global.css'; // Ví dụ một file CSS toàn cục khác
+import HomePage from './pages/Home/HomePage';
+import ProductsPage from './pages/Product/ProductsPage'; // Import ProductsPage
+import ContactPage from './pages/Contact/ContactPage'; // Import ContactPage
+import './styles/global.css';
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <Header />
-                <main> {/* Sử dụng thẻ main để bao bọc nội dung chính của trang */}
+                <main>
                     <Routes>
                         <Route path="/" element={<HomePage />} />
-                        {/* Thêm các Route khác cho các trang Sản Phẩm, Tin Tức, v.v. */}
-                        {/* <Route path="/products" element={<ProductsPage />} /> */}
-                        {/* <Route path="/login" element={<LoginPage />} /> */}
-                        {/* ... */}
+                        <Route path="/products" element={<ProductsPage />} /> {/* Thêm route này */}
+                        {/* Có thể thêm route cho trang chi tiết sản phẩm nếu muốn */}
+                        {/* <Route path="/products/:productId" element={<ProductDetailPage />} /> */}
+                        <Route path="/contact" element={<ContactPage />} />
                     </Routes>
                 </main>
                 <Footer />
