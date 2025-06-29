@@ -1,0 +1,83 @@
+/* src/components/Header/Header.css */
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Đẩy các phần sang hai bên */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 15px 50px; /* Padding trên dưới và hai bên */
+    background-color: #fff; /* Nền trắng */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Tạo bóng đổ nhẹ */
+    position: sticky; /* Giữ header cố định khi cuộn */
+    top: 0;
+    z-index: 1000; /* Đảm bảo header nằm trên các phần khác */
+}
+
+.header-left .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header-left .logo-img {
+    height: 40px; /* Điều chỉnh kích thước logo */
+    margin-right: 10px;
+}
+
+.header-nav ul {
+    list-style: none; /* Bỏ dấu chấm của list */
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.header-nav li {
+    margin: 0 20px; /* Khoảng cách giữa các mục menu */
+}
+
+.header-nav a {
+    text-decoration: none; /* Bỏ gạch chân link */
+    color: #555; /* Màu chữ */
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+}
+
+.header-nav a:hover {
+    color: #e07b39; /* Màu cam khi hover */
+}
+
+.header-right .icon-link {
+    font-size: 20px;
+    color: #555;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+
+.header-right .icon-link:hover {
+    color: #e07b39;
+}
+
+/* Responsive adjustments (basic) */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        padding: 10px 20px;
+    }
+
+    .header-nav ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .header-nav li {
+        margin: 5px 0;
+    }
+
+    .header-right {
+        margin-top: 10px;
+    }
+}

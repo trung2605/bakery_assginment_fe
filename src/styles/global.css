@@ -1,0 +1,132 @@
+/* src/styles/global.css */
+
+/* Reset CSS cơ bản */
+*,
+*::before,
+*::after {
+    box-sizing: border-box; /* Đảm bảo padding và border không làm tăng kích thước phần tử */
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font chữ mặc định */
+    line-height: 1.6;
+    color: #333; /* Màu chữ mặc định */
+    background-color: #f8f8f8; /* Màu nền cho toàn bộ trang */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    color: #333;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+a {
+    text-decoration: none;
+    color: inherit; /* Kế thừa màu chữ từ cha */
+}
+
+/* Các biến CSS (tùy chọn) */
+:root {
+    --primary-color: #e07b39; /* Màu cam chính */
+    --secondary-color: #555; /* Màu chữ phụ */
+    --light-bg-color: #f8f8f8;
+    --dark-bg-color: #333;
+    --text-light: #fff;
+    --text-dark: #333;
+    --border-color: #eee;
+    --shadow-light: 0 2px 5px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Các style chung cho container nội dung */
+.container {
+    max-width: 1200px; /* Chiều rộng tối đa của container */
+    margin: 0 auto; /* Căn giữa */
+    padding: 20px;
+}
+
+/* Nút bấm chung */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.btn-primary:hover {
+    background-color: #c96c31; /* Màu tối hơn khi hover */
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+/* Các style khác có thể thêm vào: ví dụ cho form, input, v.v. */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(224, 123, 57, 0.2);
+}
+
+/* Một số utility classes */
+.text-center {
+    text-align: center;
+}
+
+.section-title {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--primary-color); /* Sử dụng màu chính cho tiêu đề */
+}
+
+/* App layout (tùy chọn, có thể nằm trong App.css) */
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo footer luôn ở dưới cùng */
+}
+
+main {
+    flex-grow: 1; /* Cho phép phần main giãn nở để đẩy footer xuống */
+}

@@ -1,0 +1,85 @@
+/* src/components/Footer/Footer.css */
+
+.footer-container {
+    background-color: #333; /* Nền tối */
+    color: #fff; /* Chữ trắng */
+    padding: 40px 50px 20px; /* Padding */
+    font-size: 14px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các mục xuống dòng nếu không đủ chỗ */
+    justify-content: space-around; /* Căn đều các mục */
+    gap: 30px; /* Khoảng cách giữa các mục */
+    margin-bottom: 30px;
+}
+
+.footer-section {
+    flex: 1; /* Cho phép các mục giãn nở */
+    min-width: 200px; /* Kích thước tối thiểu cho mỗi mục */
+}
+
+.footer-section h3,
+.footer-section h4 {
+    color: #e07b39; /* Màu cam cho tiêu đề */
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.footer-section p,
+.footer-section ul {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #ccc; /* Màu chữ nhạt hơn cho link */
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #e07b39;
+}
+
+.footer-social .social-icons a {
+    color: #fff;
+    font-size: 20px;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.footer-social .social-icons a:hover {
+    color: #e07b39;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #555; /* Đường kẻ phân cách */
+    padding-top: 20px;
+    margin-top: 20px;
+    color: #aaa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column; /* Xếp chồng các mục trên màn hình nhỏ */
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-section {
+        margin-bottom: 20px;
+    }
+}
