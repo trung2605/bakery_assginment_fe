@@ -28,6 +28,17 @@ const productService = {
         }
     },
 
+    getProductById: async (productId) => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/${productId}`);
+            return response.data; // Trả về đối tượng sản phẩm
+        } catch (error) {
+            console.error(`Lỗi khi lấy sản phẩm với ID ${productId}:`, error);
+            throw error;
+        }
+    },
+
+
     /**
      * Lấy sản phẩm theo category có phân trang và sắp xếp.
      * GET /api/products/by-category?category={category}&page={page}&size={size}&sortBy={sortBy}&sortDirection={sortDirection}
