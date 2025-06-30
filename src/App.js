@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer';
 import HomePage from './pages/Home/HomePage';
 import ProductsPage from './pages/Product/ProductsPage'; // Import ProductsPage
 import ContactPage from './pages/Contact/ContactPage'; // Import ContactPage
+import Chatbot from './components/Chatbot/Chatbot'; // Import component Chatbot
 import './styles/global.css';
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
                         <Route path="/contact" element={<ContactPage />} />
                     </Routes>
                 </main>
-                <Footer />
+               <Footer />
+                <Chatbot /> {/* Thêm component Chatbot vào đây */}
             </div>
         </Router>
     );
