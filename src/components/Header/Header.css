@@ -1,83 +1,205 @@
-/* src/components/Header/Header.css */
+/* src/components/Layout/Header.css */
+
+/* Định nghĩa các biến màu sắc chung */
+:root {
+    --header-initial-bg: transparent; /* Nền ban đầu trong suốt */
+    --header-scrolled-bg: rgba(0, 0, 0, 0.5); /* Nền khi cuộn (trong suốt một phần) */
+    --link-color: #f0f0f0; /* Màu chữ link ban đầu */
+    --link-scrolled-color: #ffffff; /* Màu chữ link khi cuộn */
+    --hover-color: #ff9100; /* Màu cam của Dola cho hover */
+    --logo-text-initial-color: #ff9100; /* Màu cho chữ "Dola Bakery" ban đầu */
+    --logo-text-scrolled-color: #ffffff; /* Màu chữ logo khi cuộn */
+    --icon-color: #f0f0f0; /* Màu icon ban đầu */
+    --icon-scrolled-color: #ffffff; /* Màu icon khi cuộn */
+    --transition-duration: 0.5s ease-in-out; /* Tốc độ chuyển đổi mượt mà */
+}
 
 .header-container {
     display: flex;
-    justify-content: space-between; /* Đẩy các phần sang hai bên */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    padding: 15px 50px; /* Padding trên dưới và hai bên */
-    background-color: #fff; /* Nền trắng */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Tạo bóng đổ nhẹ */
-    position: sticky; /* Giữ header cố định khi cuộn */
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: var(--header-initial-bg); /* Nền ban đầu trong suốt */
+    box-shadow: none; /* Không có đổ bóng ban đầu */
+    position: fixed; /* Rất quan trọng: header phải cố định để xuyên thấu */
     top: 0;
-    z-index: 1000; /* Đảm bảo header nằm trên các phần khác */
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Đảm bảo header nằm trên cùng */
+    transition: background-color var(--transition-duration), box-shadow var(--transition-duration); /* Hiệu ứng chuyển đổi cho nền và bóng */
 }
 
-.header-left .logo {
+/* Style cho header khi cuộn */
+.header-container.scrolled {
+    background-color: var(--header-scrolled-bg); /* Nền khi cuộn */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng khi cuộn */
+}
+
+/* Left Section: Logo */
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #333;
-    font-size: 24px;
-    font-weight: bold;
 }
 
-.header-left .logo-img {
-    height: 40px; /* Điều chỉnh kích thước logo */
+.logo-image-element {
+    width: 60px; /* Chiều rộng của logo */
+    height: 60px; /* Chiều cao của logo */
+    background-image: url('../../assets/images/logo.jpg'); /* ĐƯỜNG DẪN ĐẾN ẢNH LOGO CỦA BẠN */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     margin-right: 10px;
+    transition: transform 0.3s ease;
 }
 
+.logo-link:hover .logo-image-element {
+    transform: scale(1.05);
+}
+
+.logo-text {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--logo-text-initial-color); /* Màu chữ logo ban đầu */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: color var(--transition-duration); /* Hiệu ứng chuyển đổi màu chữ */
+}
+
+/* Style cho chữ logo khi cuộn */
+.header-container.scrolled .logo-text {
+    color: var(--logo-text-scrolled-color);
+}
+
+/* Navigation Links */
 .header-nav ul {
-    list-style: none; /* Bỏ dấu chấm của list */
-    display: flex;
+    list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    gap: 25px;
 }
 
-.header-nav li {
-    margin: 0 20px; /* Khoảng cách giữa các mục menu */
-}
-
-.header-nav a {
-    text-decoration: none; /* Bỏ gạch chân link */
-    color: #555; /* Màu chữ */
-    font-size: 16px;
+.header-nav li a {
+    text-decoration: none;
+    color: var(--link-color); /* Màu chữ link ban đầu */
+    font-size: 1.1em;
     font-weight: 500;
-    transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
-}
-
-.header-nav a:hover {
-    color: #e07b39; /* Màu cam khi hover */
-}
-
-.header-right .icon-link {
-    font-size: 20px;
-    color: #555;
-    margin-left: 20px;
+    padding: 5px 0;
+    position: relative;
     transition: color 0.3s ease;
 }
 
-.header-right .icon-link:hover {
-    color: #e07b39;
+/* Style cho chữ link khi cuộn */
+.header-container.scrolled .header-nav li a {
+    color: var(--link-scrolled-color);
 }
 
-/* Responsive adjustments (basic) */
-@media (max-width: 768px) {
+.header-nav li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--hover-color);
+    transition: width 0.3s ease;
+}
+
+.header-nav li a:hover {
+    color: var(--hover-color);
+}
+
+.header-nav li a:hover::after {
+    width: 100%;
+}
+
+/* Right Section: Icons */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Khoảng cách giữa các icon */
+}
+
+.header-icon {
+    font-size: 1.3em;
+    color: var(--icon-color); /* Màu icon ban đầu */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Style cho icon khi cuộn */
+.header-container.scrolled .header-icon {
+    color: var(--icon-scrolled-color);
+}
+
+.header-icon:hover {
+    color: var(--hover-color);
+    transform: translateY(-2px); /* Hiệu ứng nhỏ khi hover */
+}
+
+/* Responsive cho Header */
+@media (max-width: 992px) {
     .header-container {
-        flex-direction: column;
         padding: 10px 20px;
     }
-
     .header-nav ul {
-        flex-direction: column;
-        align-items: center;
-        margin-top: 10px;
+        gap: 15px;
     }
-
-    .header-nav li {
-        margin: 5px 0;
+    .header-nav li a {
+        font-size: 1em;
     }
-
+    .logo-image-element {
+        width: 50px;
+        height: 50px;
+    }
+    .logo-text {
+        font-size: 1.6em;
+    }
     .header-right {
-        margin-top: 10px;
+        gap: 15px;
+    }
+    .header-icon {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Đảm bảo header vẫn cố định nhưng có thể điều chỉnh flex-direction */
+    .header-container {
+        flex-direction: row; /* Giữ nguyên hàng để hamburger menu dễ xử lý */
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    /* Ẩn navigation và icons, thay bằng hamburger menu (sẽ cần triển khai thêm) */
+    .header-nav, .header-right {
+        display: none; /* Tạm thời ẩn, bạn sẽ cần làm hamburger menu */
+    }
+
+    /* Có thể làm logo lớn hơn một chút nếu muốn */
+    .logo-image-element {
+        width: 55px;
+        height: 55px;
+    }
+    .logo-text {
+        font-size: 1.7em;
+    }
+
+    /* Ví dụ cho hamburger menu icon */
+    .hamburger-icon {
+        display: block; /* Hiện hamburger icon */
+        font-size: 1.8em;
+        color: var(--link-color);
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+    .header-container.scrolled .hamburger-icon {
+        color: var(--link-scrolled-color);
     }
 }

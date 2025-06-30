@@ -1,0 +1,81 @@
+/* src/components/Product/ProductCard.css */
+
+.product-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 300px; /* Giới hạn chiều rộng tối đa */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Đảm bảo các card có chiều cao bằng nhau trong lưới */
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.product-card a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-image {
+    width: 100%;
+    height: 200px; /* Chiều cao cố định cho ảnh sản phẩm */
+    object-fit: cover; /* Đảm bảo ảnh vừa khung mà không bị méo */
+    border-bottom: 1px solid var(--border-color);
+}
+
+.product-info {
+    padding: 15px;
+    flex-grow: 1; /* Đảm bảo phần info giãn nở để đẩy nút xuống dưới */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Đẩy giá xuống dưới tên */
+}
+
+.product-name {
+    font-size: 1.2em;
+    color: var(--text-dark);
+    margin-top: 0;
+    margin-bottom: 10px;
+    /* Optional: Giới hạn số dòng cho tên sản phẩm */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-size: 1.1em;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: auto; /* Đẩy giá xuống dưới cùng của product-info */
+}
+
+/* Nút thêm vào giỏ hàng (nếu có) */
+.btn-add-to-cart {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin: 10px 15px 15px; /* Khoảng cách với dưới cùng của card */
+    width: calc(100% - 30px); /* Đảm bảo nút nằm trong card */
+}
+
+.btn-add-to-cart:hover {
+    background-color: #c96c31;
+}

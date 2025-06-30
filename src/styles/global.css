@@ -7,6 +7,8 @@
     box-sizing: border-box; /* Đảm bảo padding và border không làm tăng kích thước phần tử */
 }
 
+
+
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font chữ mặc định */
@@ -45,6 +47,17 @@ a {
     --border-color: #eee;
     --shadow-light: 0 2px 5px rgba(0, 0, 0, 0.05);
     --shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+:root {
+    --primary-color: #ff9100; /* Màu cam đậm */
+    --secondary-color: #ffcc80; /* Màu cam nhạt */
+    --dark-text-color: #333;
+    --text-color: #555;
+    --text-muted: #777;
+    --light-gray-bg: #f5f5f5;
+    --light-yellow-bg: #fffbe6; /* Màu vàng nhạt giống ảnh */
+    --border-color: #ddd;
 }
 
 /* Các style chung cho container nội dung */
@@ -130,3 +143,4 @@ textarea:focus {
 main {
     flex-grow: 1; /* Cho phép phần main giãn nở để đẩy footer xuống */
 }
+
