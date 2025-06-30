@@ -14,6 +14,16 @@ const productService = {
    * @param {string} sortDirection Hướng sắp xếp ('asc'/'desc').
    * @returns {Promise<Object>} Đối tượng Page chứa content (danh sách sản phẩm), totalPages, totalElements.
    */
+
+  getAllProducts: async () => {
+    try {
+      const response = await axios.get(API_BASE_URL);
+      return response.data;
+    } catch (error) {
+      console.error("Lỗi khi lấy tất cả sản phẩm:", error);
+      throw error;
+    }
+  },
   getPaginatedProducts: async (
     page = 0,
     size = 10,

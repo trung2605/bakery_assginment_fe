@@ -24,10 +24,19 @@ const HomePage = () => {
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        const response = await productService.getProductsByCategory("Bánh Mì");
-        // response có thể là object {data: Array} hoặc Array
-        const list = Array.isArray(response) ? response : response.data;
-        setFeaturedProducts(list.slice(0, 4));
+        // Service này trả về object Page, lấy .content (mảng sản phẩm)
+        const response = await productService.getPaginatedProductsByCategory(
+          "Bánh Mì",
+          0,
+          4,
+          "productId",
+          "desc"
+        );
+        // response.content là array, còn nếu backend trả array luôn thì vẫn ổn
+        const list = Array.isArray(response.content)
+          ? response.content
+          : response;
+        setFeaturedProducts(list);
         setLoadingFeatured(false);
       } catch (err) {
         setErrorFeatured(
@@ -43,20 +52,29 @@ const HomePage = () => {
   useEffect(() => {
     const fetchLatestProducts = async () => {
       try {
-        const response = await productService.getAllProducts();
-        // Nếu response là object có data, dùng response.data
-        const list = Array.isArray(response) ? response : response.data;
+        // Lấy tối đa 100 sản phẩm, sắp xếp mới nhất
+        const response = await productService.getPaginatedProducts(
+          0,
+          100,
+          "expirationDate",
+          "asc"
+        );
+        // Nếu backend trả về {content: [...]}
+        const list = Array.isArray(response.content)
+          ? response.content
+          : response;
+        // Sắp xếp lại nếu cần
         const sorted = list
           .slice()
           .sort(
             (a, b) => parseDays(a.expirationDate) - parseDays(b.expirationDate)
           );
-        setLatestProducts(sorted); // Không giới hạn số lượng nữa!
+        setLatestProducts(sorted);
         setLoadingLatest(false);
       } catch (err) {
         setErrorLatest("Không thể tải bánh mới nhất.");
         setLoadingLatest(false);
-        console.log("Lỗi lấy bánh mới nhất:", err); // log cả lỗi ra nếu có
+        console.log("Lỗi lấy bánh mới nhất:", err);
       }
     };
     fetchLatestProducts();
@@ -155,38 +173,34 @@ const HomePage = () => {
         {!loadingLatest && !errorLatest && (
           <div className="latest-products-grid">
             {latestProducts.length > 0 ? (
-              latestProducts.slice(0, 5).map(
-                (
-                  product // <-- Thêm .slice(0, 5) ở đây
-                ) => (
-                  <div key={product.productId} className="latest-product-card">
-                    <div className="badge-row">
-                      {product.discount && (
-                        <span className="badge-discount">
-                          -{product.discount}%
-                        </span>
-                      )}
-                      <span className="badge-new">New</span>
-                    </div>
-                    <Link to={`/products/${product.productId}`}>
-                      <img src={product.imageUrl} alt={product.name} />
-                      <div className="latest-product-info">
-                        <h3>{product.name}</h3>
-                        <div className="latest-product-prices">
-                          <span className="product-price">
-                            {product.price.toLocaleString("vi-VN")}₫
-                          </span>
-                          {product.oldPrice && (
-                            <span className="product-old-price">
-                              {product.oldPrice.toLocaleString("vi-VN")}₫
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </Link>
+              latestProducts.slice(0, 5).map((product) => (
+                <div key={product.productId} className="latest-product-card">
+                  <div className="badge-row">
+                    {product.discount && (
+                      <span className="badge-discount">
+                        -{product.discount}%
+                      </span>
+                    )}
+                    <span className="badge-new">New</span>
                   </div>
-                )
-              )
+                  <Link to={`/products/${product.productId}`}>
+                    <img src={product.imageUrl} alt={product.name} />
+                    <div className="latest-product-info">
+                      <h3>{product.name}</h3>
+                      <div className="latest-product-prices">
+                        <span className="product-price">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </span>
+                        {product.oldPrice && (
+                          <span className="product-old-price">
+                            {product.oldPrice.toLocaleString("vi-VN")}₫
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))
             ) : (
               <p className="text-center">Không có bánh mới nhất để hiển thị.</p>
             )}
