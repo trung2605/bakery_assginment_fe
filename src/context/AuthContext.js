@@ -91,6 +91,7 @@ export const AuthProvider = ({ children }) => {
             return { success: false, message: error.response?.data?.errorMessage || "Đã xảy ra lỗi khi đăng ký." };
         }
     }, [login]); // login là dependency vì chúng ta gọi nó
+    //check
 
     // Hàm đăng xuất
     const logout = useCallback(() => {
