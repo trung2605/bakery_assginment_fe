@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import HomePage from "./pages/Home/HomePage";
 import ProductsPage from "./pages/Product/ProductsPage"; // Import ProductsPage
 import ContactPage from "./pages/Contact/ContactPage"; // Import ContactPage
+
 import Chatbot from "./components/Chatbot/Chatbot"; // Import component Chatbot
 import "./styles/global.css";
 import ProductDetail from "./pages/Product/ProductDetail/ProductDetail"; // Import ProductDetail
@@ -13,6 +14,7 @@ import CartPage from "./pages/Cart/CartPage"; // Import CartPage
 import { CartProvider } from "./context/CartContext"; // Import CartProvider
 import { AuthProvider } from "./context/AuthContext"; // Import AuthProvider
 import AuthPage from "./pages/AuthPage"; // Import AuthPage
+import "./styles/global.css";
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function App() {
             <Footer />
           </CartProvider>
         </AuthProvider>
+
       </div>
     </Router>
   );

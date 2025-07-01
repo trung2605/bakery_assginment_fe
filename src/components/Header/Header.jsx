@@ -30,13 +30,32 @@ const Header = () => {
   useEffect(() => {
     // Thêm event listener khi component mount
     window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    // Thêm event listener khi component mount
+    window.addEventListener("scroll", handleScroll);
 
     // Xóa event listener khi component unmount để tránh rò rỉ bộ nhớ
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []); // Chỉ chạy một lần khi mount và unmount
+    // Xóa event listener khi component unmount để tránh rò rỉ bộ nhớ
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Chỉ chạy một lần khi mount và unmount
 
+  // MỚI: Thêm useEffect để xử lý khi chuyển trang
+  useEffect(() => {
+    // Nếu trang hiện tại không phải trang chủ, luôn đặt header là scrolled (màu nền)
+    // hoặc bạn có thể điều chỉnh theo logic riêng của mình
+    if (location.pathname !== "/") {
+      setScrolled(true); // Luôn có nền khi không ở trang chủ
+    } else {
+      // Khi trở về trang chủ, kiểm tra lại vị trí cuộn
+      handleScroll();
+    }
+  }, [location.pathname]); // Chạy lại khi đường dẫn thay đổi
   // MỚI: Thêm useEffect để xử lý khi chuyển trang
   useEffect(() => {
     // Nếu trang hiện tại không phải trang chủ, luôn đặt header là scrolled (màu nền)
@@ -108,3 +127,4 @@ const Header = () => {
 };
 
 export default Header;
+
