@@ -30,20 +30,14 @@ const Header = () => {
   useEffect(() => {
     // Thêm event listener khi component mount
     window.addEventListener("scroll", handleScroll);
-  useEffect(() => {
-    // Thêm event listener khi component mount
-    window.addEventListener("scroll", handleScroll);
 
     // Xóa event listener khi component unmount để tránh rò rỉ bộ nhớ
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []); // Chỉ chạy một lần khi mount và unmount
-    // Xóa event listener khi component unmount để tránh rò rỉ bộ nhớ
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []); // Chỉ chạy một lần khi mount và unmount
+
+  
 
   // MỚI: Thêm useEffect để xử lý khi chuyển trang
   useEffect(() => {
