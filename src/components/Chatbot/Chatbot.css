@@ -1,0 +1,208 @@
+/* src/components/Chatbot/Chatbot.css */
+
+.chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000; /* Đảm bảo nằm trên cùng */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.chatbot-toggle-button {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color); /* Màu cam của Dola Bakery */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8em;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 10001; /* Đảm bảo nút toggle luôn nổi */
+}
+
+.chatbot-toggle-button:hover {
+    background-color: #e67e22; /* Màu cam đậm hơn khi hover */
+    transform: translateY(-3px);
+}
+
+.chatbot-window {
+    width: 350px; /* Chiều rộng của khung chat */
+    height: 500px; /* Chiều cao của khung chat */
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(100px) scale(0.8); /* Ẩn và thu nhỏ ban đầu */
+    opacity: 0;
+    pointer-events: none; /* Ngăn chặn tương tác khi ẩn */
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    position: absolute;
+    bottom: 75px; /* Đặt phía trên nút toggle */
+    right: 0;
+}
+
+.chatbot-container.open .chatbot-window {
+    transform: translateY(0) scale(1); /* Hiện và phóng to */
+    opacity: 1;
+    pointer-events: auto; /* Cho phép tương tác khi hiện */
+}
+
+.chatbot-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chatbot-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f8f9fa; /* Nền nhẹ cho khung tin nhắn */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message-bubble {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    line-height: 1.4;
+    word-wrap: break-word; /* Đảm bảo tin nhắn dài xuống dòng */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    position: relative;
+    color: #333;
+}
+
+.message-bubble.user {
+    background-color: #e2e6ea; /* Màu xám nhạt cho tin nhắn người dùng */
+    align-self: flex-end; /* Căn phải */
+    border-bottom-right-radius: 4px; /* Góc nhọn */
+}
+
+.message-bubble.bot {
+    background-color: var(--soft-yellow-bg); /* Màu nền nhẹ cho tin nhắn bot */
+    align-self: flex-start; /* Căn trái */
+    border-bottom-left-radius: 4px; /* Góc nhọn */
+}
+
+.message-timestamp {
+    display: block;
+    font-size: 0.7em;
+    color: #999;
+    margin-top: 5px;
+    text-align: right;
+}
+
+.message-bubble.bot .message-timestamp {
+    text-align: left;
+}
+
+.chatbot-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    background-color: #fff;
+}
+
+.chatbot-input input {
+    flex-grow: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 1em;
+    outline: none;
+    margin-right: 10px;
+    transition: border-color 0.2s ease;
+}
+
+.chatbot-input input:focus {
+    border-color: var(--primary-color);
+}
+
+.chatbot-input button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.chatbot-input button:hover:not(:disabled) {
+    background-color: #e67e22;
+}
+
+.chatbot-input button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Loading dots animation */
+.loading-dots {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: bounce 0.6s infinite alternate;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .chatbot-window {
+        width: 90vw; /* Gần full chiều rộng trên mobile */
+        height: 70vh; /* Chiều cao tương đối */
+        bottom: 80px; /* Điều chỉnh vị trí trên mobile */
+        right: 10px;
+    }
+
+    .chatbot-toggle-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+        bottom: 20px;
+        right: 20px;
+    }
+}

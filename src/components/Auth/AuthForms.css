@@ -1,0 +1,95 @@
+.auth-form-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+
+.auth-form-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 2em;
+}
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.auth-form .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.auth-form .form-group input[type="text"],
+.auth-form .form-group input[type="email"],
+.auth-form .form-group input[type="tel"],
+.auth-form .form-group input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #ff6f61; /* Màu chủ đạo của tiệm bánh */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.auth-form button:hover {
+    background-color: #e65c50;
+}
+
+.auth-form button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.success-message {
+    color: #27ae60;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.auth-toggle {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.auth-toggle button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 1em;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.auth-toggle button:hover {
+    color: #0056b3;
+}
