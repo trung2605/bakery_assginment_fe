@@ -12,17 +12,43 @@ export const getCart = async (cartId) => {
     }
 };
 
-export const addItemToCart = async (cartId, productId, quantity) => {
+export const addItemToCart = async (cartId, productId, quantity) => { // productId ở đây phải là string
+    console.log("addItemToCart - Nhận được từ component:", { cartId, productId, quantity });
+
     try {
-        const response = await axios.post(`${API_BASE_URL}/carts/items  `, {
-            cartId,
-            productId,
-            quantity
+        const payload = {
+            cartId: cartId,
+            productId: productId, // <--- ĐẢM BẢO RẰNG productId Ở ĐÂY LÀ MỘT CHUỖI ID
+            quantity: quantity,
+        };
+        console.log("addItemToCart - Payload gửi đi:", payload); // Log để kiểm tra payload trước khi gửi
+
+        const response = await axios.post(`${API_BASE_URL}/carts/items`, payload, {
+            headers: {
+                'Content-Type': 'application/json',
+                // Nếu có CSRF token hoặc JWT token, thêm vào đây:
+                // 'X-CSRF-TOKEN': csrfToken, // Nếu bạn sử dụng Spring Security CSRF
+                // 'Authorization': `Bearer ${localStorage.getItem('token')}` // Nếu bạn dùng JWT
+            },
+            withCredentials: true // Giữ lại nếu bạn cần gửi cookies/session
         });
-        return response;
+
+        if (response.status === 200 || response.status === 201) { // Spring Boot thường trả về 200 OK hoặc 201 Created
+            console.log("Sản phẩm đã được thêm vào giỏ hàng thành công:", response.data);
+            return response.data; // Trả về dữ liệu giỏ hàng đã cập nhật
+        } else {
+            console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', response.data);
+            throw new Error(response.data.message || 'Không thể thêm sản phẩm vào giỏ hàng.');
+        }
     } catch (error) {
-        console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error.response?.data || error.message);
-        throw new Error(error.response?.data?.message || 'Không thể thêm sản phẩm vào giỏ hàng.');
+        if (axios.isAxiosError(error)) {
+            console.error('Lỗi Axios khi thêm sản phẩm vào giỏ hàng:', error.response?.data || error.message);
+            // Có thể throw lỗi cụ thể hơn nếu backend trả về cấu trúc lỗi chi tiết
+            throw new Error(error.response?.data?.message || 'Không thể thêm sản phẩm vào giỏ hàng. Lỗi từ server.');
+        } else {
+            console.error('Lỗi không xác định khi thêm sản phẩm vào giỏ hàng:', error);
+            throw new Error('Đã xảy ra lỗi không mong muốn.');
+        }
     }
 };
 

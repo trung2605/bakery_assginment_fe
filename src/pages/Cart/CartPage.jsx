@@ -47,7 +47,7 @@ const CartPage = () => {
                         {cartItems.map((item) => (
                             <div key={item.cartItemId} className="cart-item">
                                 <div className="col-product">
-                                    <img src={item.productImage} alt={item.productName} className="cart-item-image" />
+                                    <img src={item.imageUrl} alt={item.productName} className="cart-item-image" />
                                     <div className="cart-item-details">
                                         <Link to={`/products/${item.productId}`} className="cart-item-name">{item.productName}</Link>
                                         <button className="remove-item-text-btn" onClick={() => removeCartItem(item.cartItemId)}>Xóa</button>

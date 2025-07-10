@@ -76,17 +76,15 @@ export const CartProvider = ({ children }) => {
         setLoadingCart(true);
         setCartError(null);
 
-        if (!isAuthenticated || !userCartId) {
-            setCartError('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
+        if (!userCartId) {
+            setCartError('Không tìm thấy ID giỏ hàng. Vui lòng đăng nhập lại.');
             setLoadingCart(false);
             return false;
         }
 
-        console.log("Kiểm tra số lượng:", quantity);
-        console.log("Kiểm tra userCartId:", userCartId);
-
         try {
-            console.log("Thêm sản phẩm vào giỏ:", userCartId, productId, quantity);
+            const requestData = { userCartId, productId, quantity };
+            console.log('Sending addToCart request to /api/carts/items:', requestData); // Debug
             const updatedCart = await addItemToCart(userCartId, productId, quantity);
             setCart(updatedCart);
             console.log('Sản phẩm đã được thêm vào giỏ:', updatedCart);
@@ -98,7 +96,7 @@ export const CartProvider = ({ children }) => {
         } finally {
             setLoadingCart(false);
         }
-    }, [isAuthenticated, userCartId]); // Dependencies
+    }, [userCartId]);
 
 
     // Các hàm update, remove, clear tương tự, chỉ cần đảm bảo dùng userCartId
