@@ -286,10 +286,36 @@
     transform: translateY(-5px);
 }
 
-.policy-item img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
+.policy-list {
+    display: flex;
+}
+
+/* Styling for policy icons using background-image */
+.policy-item .policy-icon {
+    width: 50px; /* Chiều rộng của vùng icon */
+    height: 50px; /* Chiều cao của vùng icon */
+    margin: 0 auto 10px auto; /* Căn giữa và khoảng cách dưới */
+    background-size: contain; /* Đảm bảo hình ảnh vừa với vùng, không bị cắt */
+    background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+    background-position: center; /* Căn giữa hình ảnh trong vùng */
+    display: flex;
+}
+
+/* Các đường dẫn hình ảnh cụ thể cho từng icon */
+.policy-item .policy-icon-freeship {
+    background-image: url('../../../assets/images/chinhsach_1.jpg');
+}
+
+.policy-item .policy-icon-return {
+    background-image: url('../../../assets/images/chinhsach_2.jpg');
+}
+
+.policy-item .policy-icon-support {
+    background-image: url('../../../assets/images/chinhsach_3.jpg');
+}
+
+.policy-item .policy-icon-payment {
+    background-image: url('../../../assets/images/chinhsach_4.jpg');
 }
 
 .policy-item h4 {
