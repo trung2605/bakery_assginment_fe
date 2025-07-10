@@ -41,10 +41,9 @@ const Header = () => {
 
   // MỚI: Thêm useEffect để xử lý khi chuyển trang
   useEffect(() => {
-    // Nếu trang hiện tại không phải trang chủ, luôn đặt header là scrolled (màu nền)
-    // hoặc bạn có thể điều chỉnh theo logic riêng của mình
+    
     if (location.pathname !== "/") {
-      setScrolled(true); // Luôn có nền khi không ở trang chủ
+      setScrolled(true); 
     } else {
       // Khi trở về trang chủ, kiểm tra lại vị trí cuộn
       handleScroll();

@@ -1,166 +1,198 @@
-// src/context/CartContext.js
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import cartService from '../services/cartService'; // Import cartService
+import { useAuth } from './AuthContext'; // Lấy user, isAuthenticated, và userCartId từ AuthContext
+import { getCart, addItemToCart, updateItemQuantity, removeCartItem, clearCart } from '../services/cartService'; // Loại bỏ createGuestCart
 
 const CartContext = createContext();
 
 export const useCart = () => {
-    return useContext(CartContext);
+    const context = useContext(CartContext);
+    if (context === undefined) {
+        throw new Error('useCart must be used within a CartProvider');
+    }
+    return context;
 };
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState(null); // Giỏ hàng sẽ được lưu trữ ở đây
-    const [wishlistItems, setWishlistItems] = useState(() => {
-        // Lấy danh sách yêu thích từ localStorage khi khởi tạo
-        const savedWishlist = localStorage.getItem('wishlist');
-        return savedWishlist ? JSON.parse(savedWishlist) : [];
-    });
+    // Lấy thông tin xác thực từ AuthContext
+    const { isAuthenticated, userCartId } = useAuth(); // Chỉ cần isAuthenticated và userCartId
+
+    const [cart, setCart] = useState(null);
     const [loadingCart, setLoadingCart] = useState(true);
     const [cartError, setCartError] = useState(null);
 
-    // Sử dụng localStorage để lưu cartId
-    const getStoredCartId = () => localStorage.getItem('cartId');
-    const setStoredCartId = (id) => localStorage.setItem('cartId', id);
-    const removeStoredCartId = () => localStorage.removeItem('cartId');
+    // State cho wishlist, giữ nguyên logic cũ của bạn
+    const [wishlistItems, setWishlistItems] = useState(() => {
+        const savedWishlist = localStorage.getItem('wishlistItems');
+        return savedWishlist ? JSON.parse(savedWishlist) : [];
+    });
 
-    // Hàm để fetch giỏ hàng từ backend
-    const fetchCart = useCallback(async () => {
-        setLoadingCart(true);
-        setCartError(null);
-        const storedCartId = getStoredCartId();
-
-        try {
-            const fetchedCart = await cartService.getCart(storedCartId);
-            if (fetchedCart) {
-                setCart(fetchedCart);
-                setStoredCartId(fetchedCart.cartId); // Cập nhật cartId nếu backend tạo mới
-            } else {
-                setCart(null); // Không có giỏ hàng, đặt về null
-                removeStoredCartId(); // Xóa cartId cũ nếu không hợp lệ
-            }
-        } catch (err) {
-            console.error('Lỗi khi tải giỏ hàng:', err);
-            setCartError('Không thể tải giỏ hàng. Vui lòng thử lại.');
-            setCart(null); // Đặt giỏ hàng về null khi có lỗi
-            removeStoredCartId(); // Xóa cartId nếu có lỗi khi fetch
-        } finally {
-            setLoadingCart(false);
-        }
-    }, []);
-
-    // Tải giỏ hàng khi ứng dụng khởi tạo
+    // useEffect để lưu wishlist vào localStorage
     useEffect(() => {
-        fetchCart();
-    }, [fetchCart]);
-
-    // Đồng bộ wishlistItems với localStorage mỗi khi nó thay đổi
-    useEffect(() => {
-        localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+        localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
     }, [wishlistItems]);
 
 
-    // --- HÀM XỬ LÝ GIỎ HÀNG ---
-    const addToCart = async (product, quantity) => {
+    // Hàm để lấy giỏ hàng chỉ khi người dùng đã đăng nhập và có userCartId
+    const fetchCart = useCallback(async () => {
         setLoadingCart(true);
         setCartError(null);
-        const currentCartId = getStoredCartId();
 
-        try {
-            const updatedCart = await cartService.addItemToCart(product.productId, quantity, currentCartId);
-            setCart(updatedCart);
-            setStoredCartId(updatedCart.cartId); // Luôn lưu cartId mới/cũ
-            console.log("Giỏ hàng đã cập nhật:", updatedCart);
-            return true;
-        } catch (err) {
-            console.error('Lỗi khi thêm vào giỏ hàng:', err.response ? err.response.data : err.message);
-            setCartError(err.response ? err.response.data.message : 'Lỗi khi thêm sản phẩm vào giỏ hàng.');
-            return false;
-        } finally {
+        // Giỏ hàng chỉ tồn tại nếu người dùng đã đăng nhập và có userCartId
+        if (!isAuthenticated || !userCartId) {
+            console.log("Người dùng chưa đăng nhập hoặc không có cartId, không tải giỏ hàng.");
+            setCart(null); // Đảm bảo giỏ hàng là null
+            setCartError('Bạn cần đăng nhập để xem giỏ hàng.');
             setLoadingCart(false);
-        }
-    };
-
-    const updateCartItemQuantity = async (cartItemId, newQuantity) => {
-        setLoadingCart(true);
-        setCartError(null);
-        const currentCartId = getStoredCartId();
-        if (!currentCartId) {
-            setCartError("Không có ID giỏ hàng để cập nhật.");
-            setLoadingCart(false);
-            return false;
+            return;
         }
 
         try {
-            const updatedCart = await cartService.updateCartItemQuantity(currentCartId, cartItemId, newQuantity);
-            setCart(updatedCart);
-            console.log("Số lượng sản phẩm trong giỏ đã cập nhật:", updatedCart);
-            return true;
-        } catch (err) {
-            console.error('Lỗi khi cập nhật số lượng:', err.response ? err.response.data : err.message);
-            setCartError(err.response ? err.response.data.message : 'Lỗi khi cập nhật số lượng sản phẩm.');
-            return false;
-        } finally {
-            setLoadingCart(false);
-        }
-    };
-
-    const removeCartItem = async (cartItemId) => {
-        setLoadingCart(true);
-        setCartError(null);
-        const currentCartId = getStoredCartId();
-        if (!currentCartId) {
-            setCartError("Không có ID giỏ hàng để xóa.");
-            setLoadingCart(false);
-            return false;
-        }
-
-        try {
-            const updatedCart = await cartService.removeCartItem(currentCartId, cartItemId);
-            setCart(updatedCart);
-            console.log("Sản phẩm đã xóa khỏi giỏ:", updatedCart);
-            // Nếu giỏ hàng trống, xóa cartId khỏi localStorage
-            if (updatedCart.cartItems.length === 0) {
-                removeStoredCartId();
+            console.log("Tải giỏ hàng với userCartId:", userCartId);
+            const fetchedCart = await getCart(userCartId); // Chỉ dùng userCartId
+            if (fetchedCart && fetchedCart.cartId) {
+                setCart(fetchedCart);
+            } else {
+                setCart(null);
+                setCartError('Giỏ hàng không hợp lệ. Vui lòng kiểm tra lại hoặc đăng nhập lại.');
             }
+        } catch (err) {
+            console.error('Lỗi khi tải giỏ hàng:', err);
+            setCartError(err.message || 'Không thể tải giỏ hàng. Vui lòng thử lại.');
+            setCart(null);
+        } finally {
+            setLoadingCart(false);
+        }
+    }, [isAuthenticated, userCartId]); // Dependencies: isAuthenticated và userCartId
+
+
+    // Effect để tải giỏ hàng khi người dùng đăng nhập/đăng xuất hoặc userCartId thay đổi
+    useEffect(() => {
+        fetchCart();
+    }, [fetchCart]); // Chỉ cần fetchCart làm dependency vì nó đã bao gồm isAuthenticated và userCartId
+
+
+    // Hàm thêm sản phẩm vào giỏ hàng
+    const addToCart = useCallback(async (productId, quantity = 1) => {
+        setLoadingCart(true);
+        setCartError(null);
+
+        if (!isAuthenticated || !userCartId) {
+            setCartError('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
+            setLoadingCart(false);
+            return false;
+        }
+
+        console.log("Kiểm tra số lượng:", quantity);
+        console.log("Kiểm tra userCartId:", userCartId);
+
+        try {
+            console.log("Thêm sản phẩm vào giỏ:", userCartId, productId, quantity);
+            const updatedCart = await addItemToCart(userCartId, productId, quantity);
+            setCart(updatedCart);
+            console.log('Sản phẩm đã được thêm vào giỏ:', updatedCart);
             return true;
         } catch (err) {
-            console.error('Lỗi khi xóa sản phẩm khỏi giỏ:', err.response ? err.response.data : err.message);
-            setCartError(err.response ? err.response.data.message : 'Lỗi khi xóa sản phẩm khỏi giỏ.');
+            console.error('Lỗi khi thêm vào giỏ hàng:', err);
+            setCartError(err.message || 'Lỗi khi thêm sản phẩm vào giỏ hàng.');
             return false;
         } finally {
             setLoadingCart(false);
         }
-    };
+    }, [isAuthenticated, userCartId]); // Dependencies
 
-    const clearCart = async () => {
+
+    // Các hàm update, remove, clear tương tự, chỉ cần đảm bảo dùng userCartId
+    const updateCartItemQuantity = useCallback(async (cartItemId, newQuantity) => {
         setLoadingCart(true);
         setCartError(null);
-        const currentCartId = getStoredCartId();
-        if (!currentCartId) {
-            setCartError("Không có giỏ hàng để xóa.");
+
+        if (!isAuthenticated || !userCartId) {
+            setCartError('Bạn cần đăng nhập để cập nhật giỏ hàng.');
+            setLoadingCart(false);
+            return false;
+        }
+        if (newQuantity <= 0) {
+            setCartError('Số lượng phải lớn hơn 0.');
             setLoadingCart(false);
             return false;
         }
 
         try {
-            await cartService.clearCart(currentCartId);
-            setCart({ cartId: currentCartId, cartItems: [], totalAmount: 0, totalItems: 0 }); // Reset giỏ hàng trong state
-            // Không xóa cartId khỏi localStorage vì giỏ hàng vẫn tồn tại trên server, chỉ là rỗng
-            console.log("Giỏ hàng đã được làm trống.");
-            return true;
+            const updatedCart = await updateItemQuantity(userCartId, cartItemId, newQuantity);
+            if (updatedCart) {
+                setCart(updatedCart);
+                console.log('Số lượng đã được cập nhật:', updatedCart);
+                return true;
+            } else {
+                setCartError('Mục giỏ hàng không tồn tại hoặc đã bị xóa.');
+                return false;
+            }
         } catch (err) {
-            console.error('Lỗi khi làm trống giỏ hàng:', err.response ? err.response.data : err.message);
-            setCartError(err.response ? err.response.data.message : 'Lỗi khi làm trống giỏ hàng.');
+            console.error('Lỗi khi cập nhật số lượng:', err);
+            setCartError(err.message || 'Lỗi khi cập nhật số lượng sản phẩm.');
             return false;
         } finally {
             setLoadingCart(false);
         }
-    };
+    }, [isAuthenticated, userCartId]);
 
-    // --- HÀM XỬ LÝ YÊU THÍCH ---
+    const removeCartItem = useCallback(async (cartItemId) => {
+        setLoadingCart(true);
+        setCartError(null);
+
+        if (!isAuthenticated || !userCartId) {
+            setCartError('Bạn cần đăng nhập để xóa sản phẩm khỏi giỏ hàng.');
+            setLoadingCart(false);
+            return false;
+        }
+
+        try {
+            const updatedCart = await removeCartItem(userCartId, cartItemId);
+            if (updatedCart) {
+                setCart(updatedCart);
+                console.log('Sản phẩm đã được xóa khỏi giỏ:', updatedCart);
+                return true;
+            } else {
+                setCartError('Mục giỏ hàng không tồn tại.');
+                return false;
+            }
+        } catch (err) {
+            console.error('Lỗi khi xóa sản phẩm khỏi giỏ:', err);
+            setCartError(err.message || 'Lỗi khi xóa sản phẩm khỏi giỏ.');
+            return false;
+        } finally {
+            setLoadingCart(false);
+        }
+    }, [isAuthenticated, userCartId]);
+
+    const clearCartFunc = useCallback(async () => {
+        setLoadingCart(true);
+        setCartError(null);
+
+        if (!isAuthenticated || !userCartId) {
+            setCartError('Bạn cần đăng nhập để làm trống giỏ hàng.');
+            setLoadingCart(false);
+            return false;
+        }
+
+        try {
+            const emptiedCart = await clearCart(userCartId);
+            setCart(emptiedCart);
+            console.log('Giỏ hàng đã được làm trống.');
+            return true;
+        } catch (err) {
+            console.error('Lỗi khi làm trống giỏ hàng:', err);
+            setCartError(err.message || 'Lỗi khi làm trống giỏ hàng.');
+            return false;
+        } finally {
+            setLoadingCart(false);
+        }
+    }, [isAuthenticated, userCartId]);
+
+    // Các hàm xử lý wishlist (giữ nguyên)
     const addToWishlist = (product) => {
-        setWishlistItems(prevItems => {
-            if (prevItems.some(item => item.productId === product.productId)) {
+        setWishlistItems((prevItems) => {
+            if (prevItems.some((item) => item.productId === product.productId)) {
                 alert('Sản phẩm đã có trong danh sách yêu thích!');
                 return prevItems;
             }
@@ -168,36 +200,31 @@ export const CartProvider = ({ children }) => {
                 productId: product.productId,
                 name: product.name,
                 imageUrl: product.imageUrl || (product.images && product.images[0]),
-                price: product.price
+                price: product.price,
             };
             return [...prevItems, newItem];
         });
     };
 
     const removeProductFromWishlist = (productId) => {
-        setWishlistItems(prevItems => prevItems.filter(item => item.productId !== productId));
+        setWishlistItems((prevItems) => prevItems.filter((item) => item.productId !== productId));
     };
-
 
     const contextValue = {
         cart,
         loadingCart,
         cartError,
         wishlistItems,
-        fetchCart, // Có thể dùng để tải lại giỏ hàng thủ công
+        fetchCart,
         addToCart,
         updateCartItemQuantity,
         removeCartItem,
-        clearCart,
+        clearCart: clearCartFunc,
         addToWishlist,
         removeProductFromWishlist,
-        cartTotalItems: cart ? cart.totalItems : 0, // Tổng số lượng mặt hàng để hiển thị trên icon giỏ hàng
-        cartTotalAmount: cart ? cart.totalAmount : 0, // Tổng tiền để hiển thị
+        cartTotalItems: cart ? cart.totalItems : 0,
+        cartTotalAmount: cart ? cart.totalAmount : 0,
     };
 
-    return (
-        <CartContext.Provider value={contextValue}>
-            {children}
-        </CartContext.Provider>
-    );
+    return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
 };

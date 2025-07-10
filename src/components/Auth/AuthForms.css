@@ -1,6 +1,8 @@
+
 .auth-form-container {
     max-width: 500px;
     margin: 50px auto;
+    margin-top: 200px;
     padding: 30px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -42,7 +44,7 @@
 .auth-form button {
     width: 100%;
     padding: 15px;
-    background-color: #ff6f61; /* Màu chủ đạo của tiệm bánh */
+    background-color: #e07b39; /* Màu chủ đạo của tiệm bánh */
     color: white;
     border: none;
     border-radius: 5px;
@@ -53,7 +55,7 @@
 }
 
 .auth-form button:hover {
-    background-color: #e65c50;
+    background-color: #e07b39;
 }
 
 .auth-form button:disabled {

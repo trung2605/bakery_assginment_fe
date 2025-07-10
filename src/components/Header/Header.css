@@ -87,7 +87,7 @@
 
 .header-nav li a {
     text-decoration: none;
-    color: var(--link-color); /* Màu chữ link ban đầu */
+    color: #000;
     font-size: 1.1em;
     font-weight: 500;
     padding: 5px 0;
@@ -222,4 +222,102 @@
     min-width: 20px; /* Đảm bảo đủ rộng cho 2 chữ số */
     text-align: center;
     line-height: 1.2;
+}
+
+
+/* --- Styles cho phần User Section (khi đã đăng nhập) --- */
+
+.user-section {
+    display: flex; /* Dùng flexbox để căn chỉnh dễ dàng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa tin nhắn chào mừng và nút đăng xuất */
+    white-space: nowrap; /* Ngăn không cho chữ xuống dòng nếu không cần thiết */
+}
+
+.welcome-message {
+    font-size: 1.05em; /* Kích thước chữ */
+    font-weight: 500;
+    color: var(--link-color); /* Màu chữ ban đầu, giống link nav */
+    transition: color var(--transition-duration); /* Chuyển đổi màu mượt mà */
+}
+
+/* Thay đổi màu chữ chào mừng khi header cuộn */
+.header-container.scrolled .welcome-message {
+    color: var(--link-scrolled-color); /* Màu chữ khi cuộn */
+}
+
+.logout-button {
+    background-color: transparent; /* Nền trong suốt */
+    border: 1px solid var(--link-color); /* Viền màu giống chữ */
+    color: var(--link-color); /* Màu chữ nút */
+    padding: 6px 12px;
+    border-radius: 5px; /* Bo tròn góc */
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Thay đổi màu nút đăng xuất khi header cuộn */
+.header-container.scrolled .logout-button {
+    border-color: var(--link-scrolled-color); /* Viền khi cuộn */
+    color: var(--link-scrolled-color); /* Chữ khi cuộn */
+}
+
+.logout-button:hover {
+    background-color: var(--hover-color); /* Nền khi hover */
+    border-color: var(--hover-color); /* Viền khi hover */
+    color: #ffffff; /* Chữ trắng khi hover */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ khi hover */
+}
+
+/* Styles cho link đăng nhập/đăng ký khi chưa đăng nhập */
+.auth-link {
+    text-decoration: none;
+    color: #000; /* Màu chữ ban đầu */
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Thay đổi màu link đăng nhập/đăng ký khi header cuộn */
+.header-container.scrolled .auth-link {
+    color: var(--link-scrolled-color);
+}
+
+.auth-link:hover {
+    color: var(--hover-color);
+}
+
+/* Điều chỉnh lại khoảng cách trong header-right nếu cần */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Khoảng cách giữa phần user/auth và icon giỏ hàng */
+}
+
+
+/* --- Responsive cho phần User Section --- */
+
+@media (max-width: 992px) {
+    .welcome-message {
+        font-size: 1em;
+    }
+    .logout-button {
+        padding: 5px 10px;
+        font-size: 0.9em;
+    }
+    .auth-link {
+        font-size: 1em;
+    }
+    .user-section {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Trong trường hợp này, bạn đã ẩn .header-right trên màn hình nhỏ. */
+    /* Nếu bạn muốn hiển thị menu người dùng trong một hamburger menu hoặc overlay, */
+    /* thì các style này sẽ áp dụng cho các phần tử bên trong overlay đó. */
+    /* Hiện tại, chúng sẽ bị ẩn theo .header-right display: none; */
 }
