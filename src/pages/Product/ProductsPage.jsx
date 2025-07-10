@@ -155,7 +155,7 @@ const ProductsPage = () => {
         <div className="products-page">
             {/* Breadcrumb / Banner */}
             <section className="product-page-hero">
-                <div className="container text-center">
+                <div className="container text-center all-container">
                     <h1>Tất cả sản phẩm</h1>
                     <p>
                         <Link to="/" className="breadcrumb-link">Trang chủ</Link>
