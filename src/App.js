@@ -15,6 +15,7 @@ import { CartProvider } from "./context/CartContext"; // Import CartProvider
 import { AuthProvider } from "./context/AuthContext"; // Import AuthProvider
 import AuthPage from "./pages/AuthPage"; // Import AuthPage
 import "./styles/global.css";
+import SystemPage from "./pages/System/SystemPage";
 
 function App() {
   return (
@@ -30,12 +31,12 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/auth" element={<AuthPage />} />
+              <Route path="/store-system" element={<SystemPage />} />
             </Routes>
             <Chatbot /> {/* Thêm component Chatbot */}
             <Footer />
           </CartProvider>
         </AuthProvider>
-
       </div>
     </Router>
   );
