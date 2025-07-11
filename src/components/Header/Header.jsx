@@ -37,8 +37,6 @@ const Header = () => {
     };
   }, []); // Chỉ chạy một lần khi mount và unmount
 
-  
-
   // MỚI: Thêm useEffect để xử lý khi chuyển trang
   useEffect(() => {
     // Nếu trang hiện tại không phải trang chủ, luôn đặt header là scrolled (màu nền)
@@ -99,26 +97,33 @@ const Header = () => {
       </nav>
 
       <div className="header-right">
-                <div className="user-section">
-                    {isAuthenticated ? (
-                        <>
-                            <span className="welcome-message">Xin chào, {user.firstName}!</span>
-                            <button onClick={logout} className="logout-button">Đăng xuất</button>
-                        </>
-                    ) : (
-                        <>
-                            <Link to="/auth" className="auth-link">Đăng nhập / Đăng ký</Link>
-                        </>
-                    )}
-                </div>
-                <Link to="/cart" className="cart-icon">
-                    <i className="fas fa-shopping-cart"></i> 
-                    {cartTotalItems > 0 && <span className="cart-count">{cartTotalItems}</span>}
-                </Link>
-            </div>
+        <div className="user-section">
+          {isAuthenticated ? (
+            <>
+              <span className="welcome-message">
+                Xin chào, {user.firstName}!
+              </span>
+              <button onClick={logout} className="logout-button">
+                Đăng xuất
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/auth" className="auth-link">
+                Đăng nhập / Đăng ký
+              </Link>
+            </>
+          )}
+        </div>
+        <Link to="/cart" className="cart-icon">
+          <i className="fas fa-shopping-cart"></i>
+          {cartTotalItems > 0 && (
+            <span className="cart-count">{cartTotalItems}</span>
+          )}
+        </Link>
+      </div>
     </header>
   );
 };
 
 export default Header;
-

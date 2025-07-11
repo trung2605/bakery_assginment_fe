@@ -1,0 +1,209 @@
+:root {
+    --primary-color: #ff9100;
+    --secondary-color: #ffc107;
+    --accent-color: #e67e22;
+    --dark-text-color: #333;
+    --text-color: #555;
+    --text-muted: #777;
+    --light-bg: #fdfdfd;
+    --light-gray-bg: #f5f5f5;
+    --soft-yellow-bg: #f3e7cd;
+    --border-color: #e0e0e0;
+}
+
+.system-page {
+    font-family: 'Arial', sans-serif;
+    color: var(--text-color, #555);
+    background: var(--light-gray-bg, #f5f5f5);
+}
+
+/* BANNER HERO CAO & ĐẸP */
+.system-page-hero {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    /* TĂNG CHIỀU CAO (có thể chỉnh lại) */
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.system-hero-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.system-hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.43) blur(0.6px);
+}
+
+.system-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, #463505a0, #5a3f0e70 70%, #2d170680 100%);
+    z-index: 2;
+}
+
+.system-hero-content {
+    position: relative;
+    z-index: 3;
+    color: #fff3d3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.system-hero-content h1 {
+    font-size: 4.3em;
+    /* CHỮ RẤT TO (có thể giảm nếu muốn) */
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    font-weight: 900;
+    margin-bottom: 18px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-shadow: 1px 2px 10px rgba(0, 0, 0, 0.16);
+}
+
+.breadcrumb-link {
+    color: rgba(255, 255, 255, 0.90);
+    text-decoration: none;
+    font-size: 1.23em;
+    transition: color 0.3s;
+}
+
+.breadcrumb-link:hover {
+    color: #fff;
+}
+
+.breadcrumb-current {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 1.17em;
+}
+
+/* Info bar & các section còn lại giữ nguyên */
+.system-infobar {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    margin-bottom: 24px;
+    background: #fff8e1;
+    border: 2px solid #f7e2ad;
+    border-radius: 12px;
+    padding: 16px 0;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    color: var(--primary-color, #ff9100);
+    min-width: 240px;
+    font-family: 'Arial', sans-serif;
+}
+
+.info-item i {
+    font-size: 32px;
+    background: #fffbe9;
+    border-radius: 50%;
+    padding: 16px;
+    border: 1px solid #f7e2ad;
+}
+
+.system-main {
+    display: flex;
+    gap: 32px;
+    padding: 24px 36px;
+}
+
+.system-store-list {
+    flex: 1.1;
+    background: #fffbe9;
+    border-radius: 16px;
+    padding: 18px 14px;
+    box-shadow: 0 2px 8px #0001;
+    max-width: 420px;
+    min-width: 340px;
+}
+
+.store-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.store-filters select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d7b865;
+    background: #fff;
+    font-size: 15px;
+    font-family: 'Arial', sans-serif;
+}
+
+.store-list {
+    max-height: 340px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.store-card {
+    border: 2px solid var(--secondary-color, #ffc107);
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: #fff;
+    margin-bottom: 4px;
+    box-shadow: 0 1px 4px #0001;
+}
+
+.store-name {
+    font-weight: bold;
+    font-size: 17px;
+    color: var(--accent-color, #e67e22);
+    margin-bottom: 6px;
+    font-family: 'Arial', sans-serif;
+}
+
+.store-address,
+.store-hotline {
+    font-size: 15px;
+    margin-bottom: 3px;
+    font-family: 'Arial', sans-serif;
+}
+
+.system-map {
+    flex: 2;
+    min-width: 380px;
+    max-width: 860px;
+    margin-left: 14px;
+}
+
+/* Responsive: Banner co nhỏ lại trên mobile */
+@media (max-width: 600px) {
+    .system-page-hero {
+        height: 180px;
+        min-height: 120px;
+    }
+
+    .system-hero-content h1 {
+        font-size: 2.1em;
+    }
+}
