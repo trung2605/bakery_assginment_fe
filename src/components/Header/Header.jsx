@@ -39,9 +39,8 @@ const Header = () => {
 
   // MỚI: Thêm useEffect để xử lý khi chuyển trang
   useEffect(() => {
-    
     if (location.pathname !== "/") {
-      setScrolled(true); 
+      setScrolled(true);
     } else {
       // Khi trở về trang chủ, kiểm tra lại vị trí cuộn
       handleScroll();
@@ -86,10 +85,6 @@ const Header = () => {
           </li>
           <li>
             <Link to="/store-system">Hệ thống cửa hàng</Link>
-          </li>{" "}
-          {/* Thêm link này nếu có */}
-          <li>
-            <Link to="/news">Tin tức</Link>
           </li>{" "}
           {/* Thêm link này nếu có */}
         </ul>
