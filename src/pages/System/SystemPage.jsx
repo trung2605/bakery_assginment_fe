@@ -18,7 +18,6 @@ const SystemPage = () => {
       try {
         const data = await branchService.getAllBranches();
         setBranches(data);
-        // Nếu có data thì show vị trí đầu tiên lên map luôn
         if (data.length > 0 && data[0].mapUrl) {
           setSelectedMapUrl(data[0].mapUrl);
           setSelectedBranchId(data[0].id);
@@ -56,70 +55,75 @@ const SystemPage = () => {
       </section>
 
       {/* Infobar vàng */}
-      <div className="system-infobar">
-        <div className="info-item">
-          <i className="fas fa-store"></i>
-          <div>
-            <b>Hệ thống 8 cửa hàng</b>
-            <br />
-            Trên toàn quốc
+      <div className="container">
+        <div className="system-infobar">
+          <div className="info-item">
+            <i className="fas fa-store"></i>
+            <div>
+              <b>Hệ thống 6 cửa hàng</b>
+              <br />
+              Trên toàn quốc
+            </div>
           </div>
-        </div>
-        <div className="info-item">
-          <i className="fas fa-users"></i>
-          <div>
-            <b>Hơn 100 nhân viên</b>
-            <br />
-            Để phục vụ quý khách
+          <div className="info-item">
+            <i className="fas fa-users"></i>
+            <div>
+              <b>Hơn 100 nhân viên</b>
+              <br />
+              Để phục vụ quý khách
+            </div>
           </div>
-        </div>
-        <div className="info-item">
-          <i className="fas fa-clock"></i>
-          <div>
-            <b>Mở cửa 8-22h</b>
-            <br />
-            cả CN & Lễ tết
+          <div className="info-item">
+            <i className="fas fa-clock"></i>
+            <div>
+              <b>Mở cửa 8-22h</b>
+              <br />
+              cả CN & Lễ tết
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="system-main">
-        {/* Danh sách chi nhánh */}
-        <div className="system-store-list">
-          <div className="store-list">
-            {branches.map((branch) => (
-              <div
-                className={`store-card ${
-                  selectedBranchId === branch.id ? "active" : ""
-                }`}
-                key={branch.id}
-                onClick={() => handleBranchClick(branch)}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="store-name">{branch.name}</div>
-                <div className="store-address">
-                  <b>Địa chỉ:</b> {branch.address}
+      <div className="container">
+        <div className="system-main">
+          {/* Danh sách chi nhánh */}
+          <div className="system-store-list">
+            <div className="store-list">
+              {branches.map((branch) => (
+                <div
+                  className={`store-card ${
+                    selectedBranchId === branch.id ? "active" : ""
+                  }`}
+                  key={branch.id}
+                  onClick={() => handleBranchClick(branch)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <div className="store-name">{branch.name}</div>
+                  <div className="store-address">
+                    <b>Địa chỉ:</b> {branch.address}
+                  </div>
+                  <div className="store-hotline">
+                    <b>Hotline:</b> {branch.hotline}
+                  </div>
                 </div>
-                <div className="store-hotline">
-                  <b>Hotline:</b> {branch.hotline}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-        {/* Google Map động */}
-        <div className="system-map">
-          <iframe
-            title="map"
-            src={selectedMapUrl}
-            width="100%"
-            height="380"
-            style={{ border: 0, borderRadius: "16px" }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+
+          {/* Google Map động */}
+          <div className="system-map">
+            <iframe
+              title="map"
+              src={selectedMapUrl}
+              width="100%"
+              height="380"
+              style={{ border: 0, borderRadius: "16px" }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>
