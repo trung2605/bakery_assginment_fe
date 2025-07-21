@@ -3,38 +3,34 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 import "./ProductCard.css";
+import PropTypes from "prop-types";
 
 const ProductCard = ({ product }) => {
   const { addToCart, cartError } = useCart();
   const { cartId } = useAuth(); // Lấy cartId từ AuthContext
   const [adding, setAdding] = useState(false);
 
-  const handleAddToCart = async () => {
-    if (
-      adding ||
-      !cartId ||
-      !product.stockQuantity ||
-      product.stockQuantity <= 0
-    ) {
-      // Sử dụng alert tạm thời, nên thay bằng toast notification trong thực tế
-      alert(
-        "Lỗi: Chưa đăng nhập, hoặc sản phẩm đã hết hàng, hoặc đang xử lý. Vui lòng kiểm tra lại."
-      );
-      return; // Dừng hàm nếu có lỗi
-    }
+  const [quantity, setQuantity] = useState(1);
 
-    setAdding(true); // Đặt trạng thái đang thêm để vô hiệu hóa nút
-    const success = await addToCart(product.productId, 1);
-    setAdding(false); // Đặt lại trạng thái sau khi thêm xong
-
-    if (success) {
-      alert(`Đã thêm ${product.name} vào giỏ hàng thành công!`);
+ const handleAddToCart = () => {
+    if (product) {
+      // Đảm bảo số lượng không vượt quá tồn kho nếu có
+      if (
+        product.stockQuantity !== undefined &&
+        quantity > product.stockQuantity
+      ) {
+        alert(
+          `Không đủ số lượng trong kho. Chỉ còn ${product.stockQuantity} sản phẩm.`
+        );
+        return;
+      }
+      addToCart(product, quantity); // Gọi hàm từ CartContext
+      alert(`Đã thêm ${quantity} x ${product.name} vào giỏ hàng!`);
     } else {
-      alert(
-        cartError || "Lỗi khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại."
-      );
+      alert("Không thể thêm sản phẩm vào giỏ hàng.");
     }
-  }
+  };
+
 
   return (
     <div className="product-card">
@@ -60,17 +56,29 @@ const ProductCard = ({ product }) => {
       <button
         className="btn btn-add-to-cart"
         onClick={handleAddToCart}
-        disabled={
-          adding ||
-          !cartId ||
-          !product.stockQuantity ||
-          product.stockQuantity <= 0
-        }
+        disabled={product.stockQuantity <= 0}
       >
         {adding ? "Đang thêm..." : "Thêm vào giỏ"}
       </button>
     </div>
   );
+};
+
+ProductCard.propTypes = {
+  // 'product' là một đối tượng và là bắt buộc
+  product: PropTypes.shape({
+    productId: PropTypes.string.isRequired, // productId là chuỗi và bắt buộc
+    name: PropTypes.string.isRequired, // name là chuỗi và bắt buộc
+    description: PropTypes.string, // description là chuỗi (tùy chọn)
+    price: PropTypes.number.isRequired, // price là số và bắt buộc
+    stockQuantity: PropTypes.number, // stockQuantity là số (tùy chọn)
+    category: PropTypes.string, // category là chuỗi (tùy chọn)
+    imageUrl: PropTypes.string.isRequired, // imageUrl là chuỗi và bắt buộc
+    expirationDate: PropTypes.string, // expirationDate là chuỗi (tùy chọn)
+  }).isRequired, // Toàn bộ đối tượng 'product' là bắt buộc
+
+  // 'onAddToCart' là một hàm và là bắt buộc
+  onAddToCart: PropTypes.func.isRequired,
 };
 
 export default ProductCard;

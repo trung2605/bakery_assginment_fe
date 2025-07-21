@@ -18,17 +18,16 @@ export const addItemToCart = async (cartId, productId, quantity) => { // product
     try {
         const payload = {
             cartId: cartId,
-            productId: productId, // <--- ĐẢM BẢO RẰNG productId Ở ĐÂY LÀ MỘT CHUỖI ID
+            productId: productId.productId, // <--- ĐẢM BẢO RẰNG productId Ở ĐÂY LÀ MỘT CHUỖI ID
             quantity: quantity,
         };
         console.log("addItemToCart - Payload gửi đi:", payload); // Log để kiểm tra payload trước khi gửi
 
+        console.log("addItemToCart - Payload chính xác gửi đi:", JSON.stringify(payload, null, 2)); 
+
         const response = await axios.post(`${API_BASE_URL}/carts/items`, payload, {
             headers: {
                 'Content-Type': 'application/json',
-                // Nếu có CSRF token hoặc JWT token, thêm vào đây:
-                // 'X-CSRF-TOKEN': csrfToken, // Nếu bạn sử dụng Spring Security CSRF
-                // 'Authorization': `Bearer ${localStorage.getItem('token')}` // Nếu bạn dùng JWT
             },
             withCredentials: true // Giữ lại nếu bạn cần gửi cookies/session
         });

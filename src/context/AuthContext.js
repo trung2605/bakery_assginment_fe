@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('userCartId'); // <-- Xóa userCartId từ localStorage
         localStorage.removeItem('guestCartId'); // <-- Xóa guestCartId (đảm bảo sạch sẽ)
-        navigate('/login'); // Chuyển hướng về trang đăng nhập sau khi đăng xuất
+        navigate('/'); // Chuyển hướng về trang đăng nhập sau khi đăng xuất
     }, [navigate]);
 
     const value = {
