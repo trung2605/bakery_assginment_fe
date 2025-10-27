@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8080/api/branches";
+const BASE_URL = "https://bakery-assginment-be.onrender.com/api/branches";
 
 const branchService = {
   // Lấy toàn bộ danh sách chi nhánh
