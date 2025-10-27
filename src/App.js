@@ -32,8 +32,9 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/store-system" element={<SystemPage />} />
+              
             </Routes>
-            <Chatbot /> {/* Thêm component Chatbot */}
+            <Chatbot /> 
             <Footer />
           </CartProvider>
         </AuthProvider>

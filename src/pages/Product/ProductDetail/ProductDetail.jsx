@@ -194,7 +194,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Product Info */}
-          <div className="product-info">
+          <div className="product-info-img">
             <h1>{product.name}</h1>
             <p className="product-meta">
               Loại: <span>{product.category || "Không xác định"}</span> | Tình

@@ -42,7 +42,7 @@
     padding: 60px 20px;
     background-color: #fff;
     box-shadow: var(--shadow-medium);
-    margin-top: -80px; /* Kéo lên để chồng lên hero section một chút */
+    margin-top: 48px !important; /* Kéo lên để chồng lên hero section một chút */
     position: relative; /* Để z-index hoạt động */
     z-index: 1; /* Đảm bảo nó nằm trên hero section */
     border-radius: 8px;
@@ -139,6 +139,11 @@
     margin-top: 40px; /* Khoảng cách trên cho nút xem tất cả */
 }
 
+.text-center.mb-4 {
+    margin-bottom: 40px; /* Khoảng cách dưới cho nút xem tất cả */
+}
+
+
 .error-message {
     color: #d9534f; /* Màu đỏ cho thông báo lỗi */
     font-weight: bold;
@@ -180,7 +185,6 @@
 .latest-products-section {
     padding: 80px 20px;
     text-align: center;
-    background-color: #fff;
     /* Nền trắng cho sạch */
 }
 
@@ -188,7 +192,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 40px 24px;
-    margin-top: 40px;
+    margin: 40px 0;
     justify-items: center;
 }
 
@@ -399,4 +403,101 @@
     .product-card img {
         height: 180px;
     }
+}
+
+.video-introduction-section {
+    padding: 60px 0; /* Khoảng cách trên dưới */
+    text-align: center;
+    background-color: #f8f8f8; /* Màu nền nhẹ nhàng */
+    margin-top: 40px; /* Khoảng cách với section phía trên */
+}
+
+.video-introduction-section .section-title {
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    color: #333;
+    position: relative;
+    padding-bottom: 10px;
+    display: inline-block; /* Để đường gạch chân chỉ rộng bằng text */
+}
+
+.video-introduction-section .section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-color, #ff6b6b); /* Sử dụng biến màu chính của bạn */
+    border-radius: 2px;
+}
+
+
+.video-container {
+    position: relative; /* Để overlay có thể nằm trên video */
+    width: 100%;
+    max-width: 900px; /* Giới hạn chiều rộng tối đa của video */
+    margin: 0 auto; /* Căn giữa video */
+    border-radius: 15px; /* Bo tròn góc khung video */
+    overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài khung bo tròn */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ nhàng cho khung */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Animation khi hover */
+}
+
+.video-container:hover {
+    transform: translateY(-5px); /* Nâng nhẹ video lên khi hover */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Đổ bóng đậm hơn khi hover */
+}
+
+.intro-video {
+    width: 100%;
+    height: auto; /* Giữ tỷ lệ khung hình */
+    display: block; /* Loại bỏ khoảng trắng dưới video */
+}
+
+.video-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Gradient từ đậm đến trong suốt */
+    color: white;
+    padding: 20px;
+    font-size: 1.2em;
+    opacity: 0; /* Ẩn overlay mặc định */
+    transition: opacity 0.3s ease-in-out; /* Animation cho overlay */
+    pointer-events: none; /* Cho phép click xuyên qua overlay để tương tác với video */
+}
+
+.video-container:hover .video-overlay {
+    opacity: 1; /* Hiển thị overlay khi hover */
+}
+
+.video-overlay p {
+    margin: 0;
+    font-style: italic;
+    font-weight: 300;
+}
+
+
+/* Thêm animation cho section khi scroll vào (Optional) */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.video-introduction-section {
+    /* ... các thuộc tính khác ... */
+    opacity: 0; /* Ban đầu ẩn */
+    transform: translateY(50px); /* Ban đầu dịch chuyển xuống */
+    /* Đây là ví dụ, bạn sẽ cần Intersection Observer API để kích hoạt animation khi scroll vào tầm nhìn */
+    /* Hoặc bạn có thể dùng thư viện như AOS (Animate On Scroll) */
+    /* Ví dụ: animation: slideInUp 1s ease-out forwards; */
 }

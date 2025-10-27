@@ -24,6 +24,8 @@ const ProductsPage = () => {
     const [itemsPerPage, setItemsPerPage] = useState(9); // Số sản phẩm trên mỗi trang
     const [totalPages, setTotalPages] = useState(0); // Tổng số trang
     const [totalElements, setTotalElements] = useState(0); // Tổng số sản phẩm
+
+     const [searchTerm, setSearchTerm] = useState('');
     
 
     useEffect(() => {
@@ -178,8 +180,10 @@ const ProductsPage = () => {
                 </div>
             </section>
 
+            
+
             {/* Main Content: Sidebar + Product List */}
-            <div className="main-products-content container">
+            <div className="main-products-content container mgt-16">
                 <aside className="sidebar">
                     {/* Filter by Category */}
                     <div className="filter-section">
@@ -220,6 +224,16 @@ const ProductsPage = () => {
                 </aside>
 
                 <div className="product-list-content">
+                    <div className="filter-section search-section"> {/* Thêm class mới cho CSS */}
+                    <h4>Tìm kiếm sản phẩm</h4>
+                    <input
+                        type="text"
+                        placeholder="Nhập tên sản phẩm..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="search-input"
+                    />
+                </div>
                     {/* Sort Options */}
                     <div className="sort-options">
                         <span className="sort-label">Sắp xếp theo:</span>
@@ -244,21 +258,25 @@ const ProductsPage = () => {
                         </button>
                     </div>
 
-                    {/* Product Grid */}
-                    <div className="product-grid">
-                        {loading && <p className="text-center">Đang tải sản phẩm...</p>}
-                        {error && <p className="text-center error-message">{error}</p>}
-                        {!loading && !error && (
-                            products.length > 0 ? (
-                                products.map(product => (
-                                    <ProductCard key={product.productId} product={product} />
-                                ))
-                            ) : (
-                                <p className="text-center">Không tìm thấy sản phẩm nào trong danh mục này.</p>
-                            )
-                        )}
-                    </div>
-
+                     {/* Product Grid */}
+                <div className="product-grid">
+                    {loading && <p className="text-center">Đang tải sản phẩm...</p>}
+                    {error && <p className="text-center error-message">{error}</p>}
+                    {!loading && !error && (
+                        // Lọc sản phẩm ở đây trước khi map
+                        products.filter(product =>
+                            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+                        ).length > 0 ? (
+                            products.filter(product =>
+                                product.name.toLowerCase().includes(searchTerm.toLowerCase())
+                            ).map(product => (
+                                <ProductCard key={product.productId} product={product} />
+                            ))
+                        ) : (
+                            <p className="text-center">Không tìm thấy sản phẩm nào phù hợp với tìm kiếm.</p>
+                        )
+                    )}
+                </div>
 
                     {!loading && !error && totalPages > 1 && (
                         <div className="pagination">

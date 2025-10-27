@@ -154,7 +154,7 @@ const HomePage = () => {
             )}
           </div>
         )}
-        <div className="text-center mt-4">
+        <div className="text-center mt-4 mb-4">
           <Link to="/products" className="btn btn-outline">
             Xem tất cả sản phẩm
           </Link>
@@ -173,7 +173,7 @@ const HomePage = () => {
         {!loadingLatest && !errorLatest && (
           <div className="latest-products-grid">
             {latestProducts.length > 0 ? (
-              latestProducts.slice(0, 5).map((product) => (
+              latestProducts.slice(0, 8).map((product) => (
                 <div key={product.productId} className="latest-product-card">
                   <div className="badge-row">
                     {product.discount && (
@@ -207,6 +207,8 @@ const HomePage = () => {
           </div>
         )}
       </section>
+
+      
     </div>
   );
 };
