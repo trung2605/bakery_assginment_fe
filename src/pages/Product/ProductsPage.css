@@ -1,4 +1,3 @@
-/* src/pages/ProductsPage.css */Add commentMore actions
 
 /* Product Page Hero / Breadcrumb */
 .product-page-hero {
@@ -12,8 +11,13 @@
     
 }
 
+.mgt-16 {
+    margin-top: 16px!important; /* Đảm bảo khoảng cách trên cùng */
+}
+
 .all-container {
     margin-top: 100px!important; /* Đảm bảo khoảng cách trên cùng */
+    
 }
 
 .product-page-hero h1 {

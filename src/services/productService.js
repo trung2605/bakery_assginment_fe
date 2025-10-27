@@ -38,11 +38,6 @@ const productService = {
         }
     },
 
-
-    /**
-     * Lấy sản phẩm theo category có phân trang và sắp xếp.
-     * GET /api/products/by-category?category={category}&page={page}&size={size}&sortBy={sortBy}&sortDirection={sortDirection}
-     */
     getPaginatedProductsByCategory: async (category, page = 0, size = 10, sortBy = 'productId', sortDirection = 'asc') => {
         try {
             const response = await axios.get(`${API_BASE_URL}/by-category`, {

@@ -26,7 +26,6 @@ const LoginForm = () => {
         if (!result.success) {
             setError(result.message);
         }
-        // Nếu thành công, AuthContext đã tự động chuyển hướng
     };
 
     return (

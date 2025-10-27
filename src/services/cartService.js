@@ -67,12 +67,14 @@ export const updateItemQuantity = async (cartId, cartItemId, quantity) => {
 
 export const removeCartItem = async (cartId, cartItemId) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/carts/remove-item/${cartId}/${cartItemId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Lỗi khi xóa sản phẩm khỏi giỏ hàng:', error.response?.data || error.message);
-        throw new Error(error.response?.data?.message || 'Không thể xóa sản phẩm khỏi giỏ hàng.');
-    }
+            const response = await axios.delete(`${API_BASE_URL}/${cartId}/items/${cartItemId}`);
+            console.log("API response for removeCartItem:", response.data);
+            return response.data; // Backend nên trả về DTO của giỏ hàng đã cập nhật
+        } catch (error) {
+            console.error("Lỗi khi xóa sản phẩm khỏi giỏ hàng qua API:", error);
+            // Ném lỗi để component gọi có thể bắt và xử lý
+            throw new Error(error.response?.data?.message || 'Không thể xóa sản phẩm khỏi giỏ hàng. Lỗi từ server.');
+        }
 };
 
 export const clearCart = async (cartId) => {
